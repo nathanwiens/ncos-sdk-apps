@@ -23,6 +23,8 @@ This application logs GPS coordinates and cell signal info
 to a USB drive (if present) and locally to /var/mnt/sdk/rssi.csv every second.
 This can be used for later plotting in a GIS visualization tool
 
+Currently tracks one modem per router.
+
 
 Expected Output
 ===============

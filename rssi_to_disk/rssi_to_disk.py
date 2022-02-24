@@ -5,9 +5,11 @@ from csclient import EventingCSClient
 
 cp = EventingCSClient('RSSI_to_disk')
 
+"""WAIT 30 SECONDS AFTER ROUTER BOOT FOR MODEM TO CONNECT AND GPS LOCK"""
 time.sleep(30)
 
 def dms2dd(degrees, minutes, seconds):
+    """GPS FORMAT CONVERSION FROM DEG/MIN/SEC to LAT/LONG"""
     if degrees >= 0:
         dd = float(degrees) + float(minutes)/60 + float(seconds)/(60*60)
     else:
@@ -42,7 +44,7 @@ while True:
     try:
         wans = cp.get('status/wan/devices')
         for wan in (wan for wan in wans if 'mdm' in wan):
-            """Filter to only track modems. Will show green if at least one modem is active"""
+            """Filter to only track modems."""
             if 'mdm' in wan:
 
                 """Get modem status for each modem"""
@@ -98,12 +100,14 @@ while True:
            sinr + ',' + cell_id + ',' + str(lat) + ',' + \
            str(long) + ',' + str(gpsfix['heading'])  + ',' + str(gpsfix['ground_speed_knots'])  + ',' + str(gpsfix['altitude_meters']) + '\n'
 
+    """WRITE TO USB DRIVE IF PRESENT"""
     try:
         with open(usb_file, 'a+', newline='') as f:
             f.write(data)
     except:
         pass
 
+    """WRITE LOCALLY TO /VAR/MNT/SDK"""
     with open(local_file, 'a+', newline='') as f:
         f.write(data)
 
