@@ -14,6 +14,8 @@ This is not an official Cradlepoint repository and should not be treated as such
     - Disables the LED light bar on E300 (and E3000)
 - **one-to-one-nat**
     - Checks for the IP of a connected modem at boot and adds/updates the 1:1 NAT configuration to match
+- **ports_status**
+    - Sets the device description to visually show the LAN/WAN/WWAN/Modem/IP Verify status
 - **recurring_speedtest**
     - Runs an Ookla speed test every 15 mins during a specified time window and generates an NCM alert with the results
 - **rssi_to_disk**
