@@ -18,3 +18,5 @@ This is not an official Cradlepoint repository and should not be treated as such
     - Runs an Ookla speed test every 15 mins during a specified time window and generates an NCM alert with the results
 - **rssi_to_disk**
     - Logs GPS and cellular signal strength data to a csv file once per second
+- **vrrp_status**
+    - Sets the asset ID field to visually show the VRRP status of all VRRP-enabled LANs.
