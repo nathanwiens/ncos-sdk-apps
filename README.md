@@ -12,6 +12,8 @@ This is not an official Cradlepoint repository and should not be treated as such
     - Detects whether a branch adapter is "active" based on a throughput threshold and updates the Asset ID field in NCM with the current status
 - **e300_run_dark**
     - Disables the LED light bar on E300 (and E3000)
+- **one-to-one-nat**
+    - Checks for the IP of a connected modem at boot and adds/updates the 1:1 NAT configuration to match
 - **recurring_speedtest**
     - Runs an Ookla speed test every 15 mins during a specified time window and generates an NCM alert with the results
 - **rssi_to_disk**
