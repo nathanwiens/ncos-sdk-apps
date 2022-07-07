@@ -25,6 +25,4 @@ This SDK app disables the LED light bar on E-series Cradlepoint routers
 Expected Output
 ===============
 Light bar turned off
-May temporarily re-enable during config changes
-but should quickly disable again
 
