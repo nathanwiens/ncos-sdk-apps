@@ -5,7 +5,7 @@ e300_run_dark
 
 Application Version
 ===================
-0.1
+0.4
 
 
 NCOS Devices Supported
