@@ -5,7 +5,7 @@ adapter_wan_status
 
 Application Version
 ===================
-0.7.0
+0.8.0
 
 
 NCOS Devices Supported
@@ -29,4 +29,4 @@ Expected Output
 ===============
 Asset ID updated when 1000KB or more is transmitted within 60 seconds
 Example:
-WAN ACTIVITY: 🟢 - KB IN: X, KB OUT: Y
+WAN ACTIVITY: 🟢 - IN: xKB, OUT: yKB

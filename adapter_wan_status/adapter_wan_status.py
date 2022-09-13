@@ -10,17 +10,12 @@ BYTES_PER_60_SECS_THRESHOLD = KB_PER_60_SECS_THRESHOLD * 1024
 
 MODELS_WITHOUT_WAN = ['CBA', 'W200', 'W400', 'L950', 'IBR200', '4250']
 
-if DEBUG:
-    cp.log("DEBUG ENABLED")
-
-if DEBUG:
-    cp.log("Getting Model")
+cp.logger.debug("Getting Model")
 
 """Get model number, since some models don't have ethernet WAN"""
 model = ''
 model = cp.get('/status/product_info/product_name')
-if DEBUG:
-    cp.log(model)
+cp.logger.debug(model)
 
 ipackets = 0
 opackets = 0
@@ -50,13 +45,11 @@ while True:
 
                     if summary:
                         if 'connected' in summary:
-                            if DEBUG:
-                                cp.log("MODEM {} ACTIVE".format(wan))
+                            cp.logger.debug("MODEM {} ACTIVE".format(wan))
                             is_available_modem = 1
 
                             stats = cp.get('/status/wan/devices/{}/stats'.format(wan))
-                            if DEBUG:
-                                cp.log(stats)
+                            cp.logger.debug(stats)
                             """
                             old_ipackets = ipackets
                             old_opackets = opackets
@@ -72,28 +65,26 @@ while True:
                             old_wan_active = wan_active
                             if (ibytes - old_ibytes >= BYTES_PER_60_SECS_THRESHOLD) or (obytes - old_obytes >= BYTES_PER_60_SECS_THRESHOLD):
                                 wan_active = True
-                                wan_string = "WAN ACTIVITY: 🟢 - KB IN: {:.2f}, KB OUT: {:.2f}".format((ibytes - old_ibytes)/1024, (obytes - old_obytes)/1024)
+                                wan_string = "WAN ACTIVITY: 🟢 - IN: {:.2f}KB, OUT: {:.2f}KB".format((ibytes - old_ibytes)/1024, (obytes - old_obytes)/1024)
                             else:
                                 wan_active = False
-                                wan_string = "WAN ACTIVITY: ⚫ - KB IN: {:.2f}, KB OUT: {:.2f}".format((ibytes - old_ibytes)/1024, (obytes - old_obytes)/1024)
+                                wan_string = "WAN ACTIVITY: ⚫ - IN: {:.2f}KB, OUT: {:.2f}KB".format((ibytes - old_ibytes)/1024, (obytes - old_obytes)/1024)
                             if old_wan_active is not wan_active:
-                                cp.log("WAN ACTIVE STATUS CHANGED FROM {} TO {}".format(old_wan_active, wan_active))
+                                cp.logger.info("WAN ACTIVE STATUS CHANGED FROM {} TO {}".format(old_wan_active, wan_active))
 
                         elif 'error' in summary:
                             continue
 
             """If no active/standby modems are found, show offline"""
             if is_available_modem == 0:
-                cp.log("NO ACTIVE MODEM FOUND")
+                cp.logger.info("NO ACTIVE MODEM FOUND")
 
         """Write string to description field"""
-        if DEBUG:
-            cp.log("WRITING ASSET ID")
-            cp.log(wan_string)
+        cp.logger.debug(f"WRITING ASSET ID: {wan_string}")
         cp.put('config/system/asset_id', wan_string)
 
     except Exception as err:
-        cp.log("Failed with exception={} err={}".format(type(err), str(err)))
+        cp.logger.error("Failed with exception={} err={}".format(type(err), str(err)))
 
     """Wait 60 seconds before checking again"""
     time.sleep(60)
