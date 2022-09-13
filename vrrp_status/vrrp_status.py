@@ -11,10 +11,6 @@ from csclient import EventingCSClient
 cp = EventingCSClient('vrrp-status')
 
 APP_NAME = 'VRRP_STATUS'
-DEBUG = False
-
-if DEBUG:
-    cp.log("DEBUG ENABLED")
 
 while True:
     try:
@@ -30,13 +26,11 @@ while True:
 
             vrrp_string = vrrp_string[:-1]
             """Write string to description field"""
-            if DEBUG:
-                cp.log("WRITING ASSET ID")
-                cp.log(vrrp_string)
+            cp.logger.debug(f"WRITING ASSET ID: {vrrp_string}")
             cp.put('config/system/asset_id', vrrp_string)
 
     except Exception as err:
-        cp.log("Failed with exception={} err={}".format(type(err), str(err)))
+        cp.logger.error("Failed with exception={} err={}".format(type(err), str(err)))
 
     """Wait 5 seconds before checking again"""
     time.sleep(5)
